@@ -23,6 +23,11 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: 12.x
+        
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.58.1
+        with: 
+          ruby-version:  2.7
 
       - name: Install Dependencies
         run: yarn
