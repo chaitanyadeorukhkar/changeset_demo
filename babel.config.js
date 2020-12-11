@@ -3,7 +3,6 @@ module.exports = function babelConfig(api) {
   // P.S: Caching is hard:P. Need to check in which scenarios this will fail
   api.cache(true);
   return {
-    presets: ['@razorpay/universe-cli/babel.react'],
     plugins: [],
   };
 };

@@ -1,10 +1,17 @@
-const universeMetroConfig = require('@razorpay/universe-cli/metro.config');
-const { mergeConfig } = require('metro-config');
+/**
+ * Metro configuration for React Native
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ */
 
-const config = {
+module.exports = {
   transformer: {
-    babelTransformerPath: require.resolve('react-native-typescript-transformer'),
+    getTransformOptions: async () => ({
+      transform: {
+        experimentalImportSupport: false,
+        inlineRequires: false,
+      },
+    }),
   },
 };
-
-module.exports = mergeConfig(universeMetroConfig, config);

@@ -1,36 +1,29 @@
 {
   "name": "csnative",
-  "description": "A react native app baked with TypeScript",
-  "repository": "https://github.com/chaitanyadeorukhkar/changeset-demo",
-  "version": "1.0.0",
-  "author": "chaitanyadeorukhkar",
-  "license": "UNLICENSED",
+  "version": "0.0.1",
+  "private": true,
   "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
     "start": "react-native start",
-    "ios": "react-native run-ios --configuration Debug",
-    "ios:production": "react-native run-ios --configuration Release",
-    "android": "react-native run-android --variant debug",
-    "android:production": "react-native run-android --variant release",
-    "test": "universe test",
-    "tsc": "universe tsc"
+    "test": "jest",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "prop-types": "15.7.2",
-    "@react-native-community/masked-view": "0.1.10",
-    "@react-navigation/native": "5.8.9",
-    "@react-navigation/stack": "5.12.6",
-    "react-native-gesture-handler": "1.8.0",
-    "react-native-reanimated": "1.13.2",
-    "react-native-safe-area-context": "3.1.9",
-    "react-native-screens": "2.15.0",
     "react": "16.13.1",
-    "react-native": "0.63.4",
-    "@razorpay/universe-cli": "1.2.9"
+    "react-native": "0.63.4"
   },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog",
-      "disableScopeLowerCase": true
-    }
+  "devDependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.5.1",
+    "jest": "^25.1.0",
+    "metro-react-native-babel-preset": "^0.59.0",
+    "react-test-renderer": "16.13.1"
+  },
+  "jest": {
+    "preset": "react-native"
   }
 }

@@ -1,9 +1,7 @@
-# editor configs
+# OSX
 #
 .DS_Store
-.idea
-.vscode
-.gradle
+
 # Xcode
 #
 build/
@@ -22,6 +20,7 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
+
 # Android/IntelliJ
 #
 build/
@@ -29,32 +28,32 @@ build/
 .gradle
 local.properties
 *.iml
+
 # node.js
 #
 node_modules/
-*-debug.log
-*-error.log
-package-lock.json
-coverage/
+npm-debug.log
+yarn-error.log
+
 # BUCK
 buck-out/
 \.buckd/
+*.keystore
 !debug.keystore
+
 # fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
 # screenshots whenever they are needed.
 # For more information about the recommended setup visit:
 # https://docs.fastlane.tools/best-practices/source-control/
+
 */fastlane/report.xml
 */fastlane/Preview.html
 */fastlane/screenshots
+
 # Bundle artifact
 *.jsbundle
+
 # CocoaPods
 /ios/Pods/
-# react-native-config codegen
-ios/tmp.xcconfig
-# Environment files
-.env
-.env.production
