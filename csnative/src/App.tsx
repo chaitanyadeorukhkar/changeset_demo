@@ -19,7 +19,7 @@ const App: React.FC<Props> = ({ navigation }) => (
       }}
       onPress={() => navigation.navigate('Details')}
     >
-      <Text style={{ color: 'white' }}>See More Details</Text>
+      <Text style={{ color: 'white' }}>See Details</Text>
     </TouchableOpacity>
   </View>
 );
