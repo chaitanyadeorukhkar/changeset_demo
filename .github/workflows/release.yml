@@ -28,6 +28,9 @@ jobs:
         uses: ruby/setup-ruby@v1.58.1
         with: 
           ruby-version:  2.7
+          
+      - name: Setup Fastlane
+        run: bundle install
 
       - name: Install Dependencies
         run: yarn
