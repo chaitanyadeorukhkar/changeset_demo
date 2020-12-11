@@ -16,7 +16,8 @@
     ]
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\""
+    "test": "echo \"Error: no test specified\"",
+    "version": "changeset version"
   },
   "devDependencies": {
     "lerna": "3.18.3"
