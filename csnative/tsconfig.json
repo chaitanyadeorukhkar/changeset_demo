@@ -1,0 +1,4 @@
+{
+  "extends": "./node_modules/@razorpay/universe-cli/tsconfig.react-native.json",
+  "include": ["index.js", "src"]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@sample/workspace-package",
+  "description": "Sample Package in monorepo",
+  "repository": "git@github.com:razorpay/frontend-universe.git",
+  "version": "1.0.0",
+  "author": "",
+  "license": "UNLICENSED",
+  "main": "",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\""
+  }
+}
