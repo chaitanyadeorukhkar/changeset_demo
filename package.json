@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "changeset_demo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Monorepo to test out changesets",
   "repository": "https://github.com/chaitanyadeorukhkar/changeset_demo",
   "author": "chaitanyadeorukhkar",
