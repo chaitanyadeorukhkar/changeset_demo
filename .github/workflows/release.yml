@@ -30,6 +30,7 @@ jobs:
       - name: Create Release Pull Request
         uses: changesets/action@master
         with:
+          version: yarn bump-version
           commit: "build: update version"
           title: "buildg: update version"
         env:
