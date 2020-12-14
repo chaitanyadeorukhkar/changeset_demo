@@ -23,12 +23,12 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: 12.x
-        
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.58.1
-        with: 
-          ruby-version:  2.7
-          
+        with:
+          ruby-version: 2.7
+
       - name: Setup Fastlane
         run: bundle install
 
@@ -40,6 +40,6 @@ jobs:
         with:
           version: yarn bump-version
           commit: "build: update version"
-          title: "buildg: update version"
+          title: "build: update version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
