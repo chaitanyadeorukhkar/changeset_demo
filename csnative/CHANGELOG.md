@@ -1,5 +1,15 @@
 # csnative
 
+## 1.1.0
+
+### Minor Changes
+
+- dd1559e: chore: change app text
+
+### Patch Changes
+
+- 909b193: chore: update app text
+
 ## 1.0.0
 
 ### Major Changes
