@@ -39,10 +39,11 @@ jobs:
         run: yarn
 
       - name: Create Release Pull Request
-        uses: changesets/action@master
+        uses: chaitanyadeorukhkar/action@master
         with:
           version: yarn bump-version
           commit: "build: update version"
           title: "build: update version"
+          branch: "native"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
