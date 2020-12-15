@@ -1,5 +1,15 @@
 # csnative
 
+## 1.2.0
+
+### Minor Changes
+
+- 82b65ab: chore: make some native app changes
+
+### Patch Changes
+
+- 86ac1cd: chore: add some native changes
+
 ## 1.1.0
 
 ### Minor Changes
