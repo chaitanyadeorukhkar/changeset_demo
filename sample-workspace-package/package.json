@@ -2,7 +2,7 @@
   "name": "@sample/workspace-package",
   "description": "Sample Package in monorepo",
   "repository": "git@github.com:razorpay/frontend-universe.git",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "",
   "license": "UNLICENSED",
   "main": "",
