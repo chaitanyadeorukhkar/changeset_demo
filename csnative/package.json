@@ -8,7 +8,7 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "bump-version": "bundle exec fastlane bump"
+    "version-update": "bundle exec fastlane versionUpdate"
   },
   "dependencies": {
     "react": "16.13.1",
