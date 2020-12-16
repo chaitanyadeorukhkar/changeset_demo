@@ -1,36 +1,39 @@
 skip_docs
+desc '[Android] Update App version'
+  packageJson = load_json(json_path: "./package.json")
+  packageJsonName = packageJson['name']
+  packageJsonVersion = packageJson['version']
+  gradlePath = './android/app/build.gradle'
 
-desc 'Android: Increment versionCode and set versionName to package.json version.'
-  package = load_json(json_path: "./package.json")
-
-  private_lane :inc_ver_and do
+  private_lane :inc_ver_android do
     increment_version_code(
-      gradle_file_path: "./android/app/build.gradle",
+      gradle_file_path: gradlePath,
     )
 
     increment_version_name(
-      gradle_file_path: "./android/app/build.gradle",
-      version_name: package['version']
+      gradle_file_path: gradlePath,
+      version_name: packageJsonVersion
     )
   end
 
-
-  desc 'iOS: Increment build number and set the version to package.json version.'
-  private_lane :inc_ver_ios do
-  package = load_json(json_path: "./package.json")
+  desc '[iOS] Update App version'
+    private_lane :inc_ver_ios do
+    packageJson = load_json(json_path: "./package.json")
+    packageJsonName = packageJson['name']
+    packageJsonVersion = packageJson['version']
+    iosProjectPath = './ios/' + packageJsonName + '.xcodeproj'
 
     increment_build_number(
-      xcodeproj: './ios/' + package['name'] + '.xcodeproj'
+      xcodeproj: iosProjectPath
     )
     increment_version_number(
-      xcodeproj: './ios/' + package['name'] + '.xcodeproj',
-      version_number: package['version']
+      xcodeproj: iosProjectPath,
+      version_number: packageJsonVersion
     )
   end
 
-
-  desc 'Bump build numbers, and set the version to match the pacakage.json version.'
-  lane :bump do
+  desc 'Increment build numbers, and set the version to match the pacakage.json version'
+  lane :versionUpdate do
     inc_ver_ios
-    inc_ver_and
+    inc_ver_android
   end
