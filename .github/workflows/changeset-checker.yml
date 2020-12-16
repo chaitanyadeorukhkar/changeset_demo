@@ -16,6 +16,7 @@ jobs:
         run: |
           readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
           for file in ${added_files[@]}; do
+            echo $file
             if [[ $file != .changeset/* ]]; then
               exit 0
             fi
