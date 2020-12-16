@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-    paths: 
+    paths:
       - "csnative/**"
       - "./package.json"
 
@@ -39,11 +39,10 @@ jobs:
         run: yarn
 
       - name: Create Release Pull Request
-        uses: chaitanyadeorukhkar/action@master
+        uses: changesets/action@master
         with:
           version: yarn bump-version
           commit: "build: update version"
           title: "build: update version"
-          branch: "native"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
