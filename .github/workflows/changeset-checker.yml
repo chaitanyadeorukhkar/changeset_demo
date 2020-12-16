@@ -10,6 +10,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: Get Changed Files
         uses: lots0logs/gh-action-get-changed-files@2.1.4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Check files
         run: |
           readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
@@ -18,5 +20,3 @@ jobs:
               exit 1
             fi
           done
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
