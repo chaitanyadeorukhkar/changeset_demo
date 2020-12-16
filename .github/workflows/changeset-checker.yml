@@ -1,13 +1,13 @@
 name: Changeset Cheker
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2      
+      - uses: actions/checkout@v2
       - name: Get Changed Files
         uses: lots0logs/gh-action-get-changed-files@2.1.4
       - name: Check files
@@ -18,4 +18,5 @@ jobs:
               exit 1
             fi
           done
-
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
