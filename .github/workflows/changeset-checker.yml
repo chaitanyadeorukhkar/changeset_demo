@@ -1,0 +1,21 @@
+name: Changeset Cheker
+on:
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2      
+      - name: Get Changed Files
+        uses: lots0logs/gh-action-get-changed-files@2.1.4
+      - name: Check files
+        run: |
+          readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
+          for file in ${added_files[@]}; do
+            if [[ $file != .changeset/* ]]; then
+              exit 1
+            fi
+          done
+
