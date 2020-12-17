@@ -26,7 +26,7 @@ jobs:
           echo "::set-output name=hasChangeset::0"
       - name: Debug
         env: 
-          CHANGED_FILES: ${{ steps.changed_files.outputs.all }}
+          CHANGED_FILES: ${{ steps.files.outputs.all }}
         run: echo $CHANGED_FILES
       - name: No Changeset Found
         if: steps.check.outputs.hasChangeset == 0
