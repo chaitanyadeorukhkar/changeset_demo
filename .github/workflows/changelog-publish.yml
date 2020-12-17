@@ -15,4 +15,4 @@ jobs:
           path: ./csnative/CHANGELOG.md
       - name: Debug
         run: |
-         curl -X POST -H 'Content-type: application/json' --data '{"text": "${{ steps.changelog.outputs.changes }}}"' https://hooks.slack.com/services/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
+         curl -X POST -H 'Content-type: application/json' --data '{"text": "Cool cool"' https://hooks.slack.com/services/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
