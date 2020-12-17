@@ -9,8 +9,20 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Get Changed Files
+        id: files
         uses: lots0logs/gh-action-get-changed-files@2.1.4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Check files
-        run: cat ${HOME}/files_modified.json
+      - name: Process files
+        run: |
+          readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
+          for file in ${added_files[@]}; do
+            if [[ $file != .changeset* ]]; then
+              echo "::set-output name=hasChangeset::1"
+              exit
+            fi
+          done
+          echo "::set-output name=hasChangeset::0"
+      - name: Check for Changesets
+        if: steps.check.outputs.hasChangeset == 0
+        run: exit 1
