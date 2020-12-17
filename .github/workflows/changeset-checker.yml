@@ -13,11 +13,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Check files
-        run: |
-        echo ${{ steps.files.outputs.added }}
-          readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
-          for file in ${added_files[@]}; do
-            if [[ $file != .changeset/* ]]; then
-              exit 0
-            fi
-          done
+        run: echo ${HOME}/files_modified.json
