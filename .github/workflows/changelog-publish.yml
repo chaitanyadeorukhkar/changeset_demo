@@ -13,6 +13,11 @@ jobs:
         uses: mindsers/changelog-reader-action@v2.0.0
         with:
           path: ./csnative/CHANGELOG.md
+      - name: Slack Markdown Converter
+        uses: LoveToKnow/slackify-markdown-action@v1.0.0
+        id: slack-markdown
+        with:
+          text: ${{ steps.changelog.outputs.changes }}
       - name: Debug
         run: |
-         curl -X POST -H 'Content-type: application/json' --data '{"text": "Cool cool"}' https://hooks.slack.com/services/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
+         curl -X POST -H 'Content-type: application/json' --data '{"text": "${{ steps.slack-markdown.outputs.text }}"}' https://hooks.slack.com/services/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
