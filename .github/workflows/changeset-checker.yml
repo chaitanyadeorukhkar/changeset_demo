@@ -23,6 +23,9 @@ jobs:
             fi
           done
           echo "::set-output name=hasChangeset::0"
-      - name: Check for Changesets
+      - name: No Changeset Found
         if: steps.check.outputs.hasChangeset == 0
         run: echo "No Changeset found. Please add a Changeset to your PR." ; exit 1
+      - name: Changeset Found
+        if: steps.check.outputs.hasChangeset == 1
+        run: echo "Changeset Found!"
