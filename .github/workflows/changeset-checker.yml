@@ -14,6 +14,7 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Process files
+        id: check
         run: |
           readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
           for file in ${added_files[@]}; do
@@ -24,7 +25,9 @@ jobs:
           done
           echo "::set-output name=hasChangeset::0"
       - name: Debug
-        run: echo ${{ steps.files.outputs.all }}
+        env: 
+          CHANGED_FILES: ${{ steps.changed_files.outputs.all }}
+        run: echo $CHANGED_FILES
       - name: No Changeset Found
         if: steps.check.outputs.hasChangeset == 0
         run: echo "No Changeset found. Please add a Changeset to your PR." ; exit 1
