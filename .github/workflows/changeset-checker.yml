@@ -12,8 +12,8 @@ jobs:
         uses: lots0logs/gh-action-get-changed-files@2.1.4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Check files
-        id: file_check
+      - name: Check for Changeset
+        id: changeset_check
         run: |
           readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
           hasChangeset=0
@@ -24,6 +24,6 @@ jobs:
             fi
           done
           if [[ $hasChangeset == 0 ]]; then
-            echo "No Changeset found"
+            echo "No Changeset found. You can add a changeset using 'yarn changeset'"
             exit 1
           fi
