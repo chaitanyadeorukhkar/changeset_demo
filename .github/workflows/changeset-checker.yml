@@ -24,7 +24,7 @@ jobs:
           done
           echo "::set-output name=hasChangeset::0"
       - name: Debug
-        run: echo ${{ steps.files.outputs.added }}
+        run: echo ${{ steps.files.outputs.all }}
       - name: No Changeset Found
         if: steps.check.outputs.hasChangeset == 0
         run: echo "No Changeset found. Please add a Changeset to your PR." ; exit 1
