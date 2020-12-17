@@ -27,3 +27,4 @@ jobs:
             echo "No Changeset found. You can add a changeset using 'yarn changeset'"
             exit 1
           fi
+          echo "Changeset found!"
