@@ -16,14 +16,14 @@ jobs:
         id: file_check
         run: |
           readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
-          hasChangeset= 0
+          $hasChangeset = 0
           for file in ${added_files[@]}; do
             if [[ $file == .changeset* ]]; then
-              hasChangeset= 1
+              $hasChangeset = 1
               exit
             fi
           done
-          if [[hasChangeset == 0]]; then
+          if [[ $hasChangeset == 0 ]]; then
             echo "No Changeset found"
             exit 1
           fi
