@@ -8,10 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Slack Markdown Converter
-        uses: LoveToKnow/slackify-markdown-action@v1.0.0
-        id: convert
+      - name: Changelog Reader
+        id: changelog
+        uses: mindsers/changelog-reader-action@v2.0.0
         with:
-          text: cat csnative/CHANGELOG.md
+          path: ./csnative/CHANGELOG.md
       - name: Debug
-        run: echo ${{ steps.convert.outputs.text }}
+        run: echo ${{ steps.changelog.outputs.changes }}
