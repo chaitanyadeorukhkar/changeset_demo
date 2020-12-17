@@ -18,7 +18,8 @@ jobs:
         run: |
           readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
           for file in ${added_files[@]}; do
-            if [[ $file != .changeset* ]]; then
+            if [[ $file == .changeset* ]]; then
+              echo $file
               echo "::set-output name=hasChangeset::1"
               exit
             fi
