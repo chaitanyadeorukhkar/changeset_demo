@@ -13,8 +13,8 @@ jobs:
         uses: lots0logs/gh-action-get-changed-files@2.1.4
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Process files
-        id: check
+      - name: Check files
+        id: file_check
         run: |
           readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
           for file in ${added_files[@]}; do
@@ -25,13 +25,9 @@ jobs:
             fi
           done
           echo "::set-output name=hasChangeset::0"
-      - name: Debug
-        env: 
-          CHANGED_FILES: ${{ steps.files.outputs.all }}
-        run: echo $CHANGED_FILES
       - name: No Changeset Found
-        if: steps.check.outputs.hasChangeset == 0
+        if: steps.file_check.outputs.hasChangeset == 0
         run: echo "No Changeset found. Please add a Changeset to your PR." ; exit 1
       - name: Changeset Found
-        if: steps.check.outputs.hasChangeset == 1
+        if: steps.file_check.outputs.hasChangeset == 1
         run: echo "Changeset Found!"
