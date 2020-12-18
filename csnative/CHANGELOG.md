@@ -1,6 +1,6 @@
 # csnative
 
-## 1.1.0
+## [1.1.0]
 
 ### Minor Changes
 
@@ -10,7 +10,7 @@
 
 - 909b193: chore: update app text
 
-## 1.0.0
+## [1.0.0]
 
 ### Major Changes
 
@@ -20,7 +20,7 @@
 
 - 0c0311a: build: update fastlane
 
-## 0.0.2
+## [0.0.2]
 
 ### Patch Changes
 

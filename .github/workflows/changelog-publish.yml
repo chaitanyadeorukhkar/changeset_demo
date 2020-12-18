@@ -1,0 +1,23 @@
+name: Slack notifier
+# Controls when the action will run. 
+on:
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Changelog Reader
+        id: changelog
+        uses: mindsers/changelog-reader-action@v2.0.0
+        with:
+          path: ./csnative/CHANGELOG.md
+      - name: Slack Markdown Converter
+        uses: LoveToKnow/slackify-markdown-action@v1.0.0
+        id: slack-markdown
+        with:
+          text: ${{ steps.changelog.outputs.changes }}
+      - name: Debug
+        run: |
+         curl -X POST -H 'Content-type: application/json' --data '{"text": "${{ steps.slack-markdown.outputs.text }}"}' https://hooks.slack.com/services/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
