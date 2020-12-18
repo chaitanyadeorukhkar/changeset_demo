@@ -1,21 +1,29 @@
-name: Changeset Cheker
+name: Changeset Check
 on:
   pull_request:
-    branches: [ master ]
+    branches: [master]
 jobs:
-  build:
+  changeset-check:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v2      
+      - uses: actions/checkout@v2
       - name: Get Changed Files
+        id: files
         uses: lots0logs/gh-action-get-changed-files@2.1.4
-      - name: Check files
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Check for Changeset
+        id: changeset_check
         run: |
           readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
+          hasChangeset=0
           for file in ${added_files[@]}; do
-            if [[ $file != .changeset/* ]]; then
-              exit 1
+            if [[ $file == .changeset* ]]; then
+              hasChangeset=1
+              exit
             fi
           done
-
+          if [[ $hasChangeset == 0 ]]; then
+            echo "No Changeset found. You can add a changeset using 'yarn changeset'"
+            exit 1
+          fi
