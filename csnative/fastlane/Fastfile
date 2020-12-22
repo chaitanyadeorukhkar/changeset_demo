@@ -4,16 +4,21 @@ desc '[Android] Update App version'
   packageJsonName = packageJson['name']
   packageJsonVersion = packageJson['version']
   gradlePath = './android/app/build.gradle'
+  androidVersionName = android_get_version_name(
+      gradle_file: gradlePath
+    )
 
   private_lane :inc_ver_android do
-    increment_version_code(
-      gradle_file_path: gradlePath,
-    )
-
-    increment_version_name(
-      gradle_file_path: gradlePath,
-      version_name: packageJsonVersion
-    )
+    if androidVersionName != packageJsonVersion then
+        android_set_version_code(
+            gradle_file: gradlePath
+        )
+        
+        android_set_version_name(
+            version_name: packageJsonVersion,
+            gradle_file: gradlePath 
+        )
+    end
   end
 
   desc '[iOS] Update App version'
@@ -22,18 +27,23 @@ desc '[Android] Update App version'
     packageJsonName = packageJson['name']
     packageJsonVersion = packageJson['version']
     iosProjectPath = './ios/' + packageJsonName + '.xcodeproj'
-
-    increment_build_number(
-      xcodeproj: iosProjectPath
+    iosVersionNumber = get_version_number(
+        xcodeproj: iosProjectPath
     )
-    increment_version_number(
-      xcodeproj: iosProjectPath,
-      version_number: packageJsonVersion
-    )
+    if iosVersionNumber != packageJsonVersion then
+        increment_build_number(
+            xcodeproj: iosProjectPath
+        )
+    
+        increment_version_number(
+            xcodeproj: iosProjectPath,
+            version_number: packageJsonVersion
+        )
+    end
   end
 
   desc 'Increment build numbers, and set the version to match the pacakage.json version'
   lane :versionUpdate do
-    inc_ver_ios
     inc_ver_android
+    inc_ver_ios
   end
