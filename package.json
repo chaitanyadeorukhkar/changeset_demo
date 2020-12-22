@@ -17,7 +17,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "version-update": "lerna run --scope csnative version-update"
+    "version-update:csnative": "lerna run --scope csnative version-update",
+    "version-update": "changeset version  && yarn version-update:*"
   },
   "devDependencies": {
     "lerna": "3.18.3"
