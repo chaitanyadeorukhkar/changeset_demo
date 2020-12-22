@@ -23,7 +23,16 @@ jobs:
         uses: actions/setup-node@master
         with:
           node-version: 12.x
-
+      - name: Set gem cache directory path
+        id: gem-cache-dir-path
+        run: echo "::set-output name=dir::$(gem cache dir)"
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.gem-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1.58.1
         with:
