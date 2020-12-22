@@ -1,5 +1,11 @@
 # @sample/workspace-package
 
+## 1.0.3
+
+### Patch Changes
+
+- 895c0e8: chore: add some non-react-native changes
+
 ## 1.0.2
 
 ### Patch Changes
