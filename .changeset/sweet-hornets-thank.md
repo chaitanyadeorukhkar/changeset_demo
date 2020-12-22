@@ -1,5 +1,5 @@
 ---
-"csnative": patch
+"csnative": minor
 ---
 
 update hermes text
