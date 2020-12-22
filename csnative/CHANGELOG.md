@@ -1,5 +1,18 @@
 # csnative
 
+## 1.3.0
+
+### Minor Changes
+
+- b4ac925: update hermes text
+
+### Patch Changes
+
+- dc64644: update text
+- a197deb: add some changes
+- 978b21b: update app text
+- 82bd3b0: another change
+
 ## 1.2.0
 
 ### Minor Changes
