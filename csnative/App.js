@@ -43,7 +43,7 @@ const App: () => React$Node = () => {
               <Text style={styles.sectionTitle}>Step One</Text>
               <Text style={styles.sectionDescription}>
                 Edit <Text style={styles.highlight}>App.js</Text> to change this
-                screen and then come back to see your file!
+                screen and then come back to see your file
               </Text>
             </View>
             <View style={styles.sectionContainer}>
