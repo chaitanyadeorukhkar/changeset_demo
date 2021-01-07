@@ -1,5 +1,12 @@
 # csnative
 
+## 1.5.0
+
+### Minor Changes
+
+- 9b5442e: Redesign the home layout
+- 1796c30: feat: redesign home layout
+
 ## 1.4.0
 
 ### Minor Changes
