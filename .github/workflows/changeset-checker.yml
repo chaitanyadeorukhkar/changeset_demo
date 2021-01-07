@@ -22,15 +22,16 @@ jobs:
           hasNonExceptionFiles=0
 
           for file in ${all_files[@]}; do
-          if [[ $hasNonExceptionFile == 0 ]]; then
-            if printf '%s\n' "${exception_files[@]}" | grep -x -q $file; 
-            then 
-              # is exception file
-            else 
-              # is a non-exception file
-              hasNonExceptionFile=1
-            fi  
-          fi
+            if [[ $hasNonExceptionFile == 0 ]]; then
+              if printf '%s\n' "${exception_files[@]}" | grep -x -q $file; 
+              then
+                echo "Exception"
+                # is exception file
+              else
+                # is a non-exception file
+                hasNonExceptionFile=1
+              fi  
+            fi
           done
 
           if [[ $hasNonExceptionFile == 0 ]]; then
