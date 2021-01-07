@@ -1,5 +1,11 @@
 # @sample/workspace-package
 
+## 1.0.4
+
+### Patch Changes
+
+- 634db76: Update test.js
+
 ## 1.0.3
 
 ### Patch Changes

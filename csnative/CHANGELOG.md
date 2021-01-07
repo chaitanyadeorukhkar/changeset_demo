@@ -1,5 +1,15 @@
 # csnative
 
+## 1.4.0
+
+### Minor Changes
+
+- 44d3ac1: Update lockc
+
+### Patch Changes
+
+- 114c2cd: Update App.js
+
 ## 1.3.0
 
 ### Minor Changes
