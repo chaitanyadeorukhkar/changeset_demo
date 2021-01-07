@@ -23,7 +23,8 @@ jobs:
 
           for file in ${all_files[@]}; do
           if [[ $hasNonExceptionFile == 0 ]]; then
-            if printf '%s\n' "${exception_files[@]}" | grep -x -q $file; then 
+            if printf '%s\n' "${exception_files[@]}" | grep -x -q $file; 
+            then 
               # is exception file
             else 
               # is a non-exception file
