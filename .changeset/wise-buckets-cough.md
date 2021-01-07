@@ -1,5 +1,5 @@
 ---
-"@changeset_demo/app": minor
+"csnative": minor
 ---
 
 feat: redesign home layout
