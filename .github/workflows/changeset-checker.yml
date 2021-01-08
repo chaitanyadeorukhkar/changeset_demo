@@ -1,7 +1,7 @@
 name: Changeset Check
 on:
   pull_request:
-    branches: [master]
+    branches: [other]
 jobs:
   changeset-check:
     runs-on: ubuntu-latest
@@ -15,30 +15,8 @@ jobs:
       - name: Check for Changeset
         id: changeset_check
         run: |
-          exception_files=('README.md' '.gitignore' 'eslintrc.js')
           readarray -t added_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.added }}')"
-          readarray -t all_files <<<"$(jq -r '.[]' <<<'${{ steps.files.outputs.all }}')"
           hasChangeset=0
-          hasNonExceptionFiles=0
-
-          for file in ${all_files[@]}; do
-            if [[ $hasNonExceptionFile == 0 ]]; then
-              if printf '%s\n' "${exception_files[@]}" | grep -x -q $file; 
-              then
-                echo "Exception"
-                # is exception file
-              else
-                # is a non-exception file
-                hasNonExceptionFile=1
-              fi  
-            fi
-          done
-
-          if [[ $hasNonExceptionFile == 0 ]]; then
-            echo "PR contains only exception files that do not need a changeset"
-            exit
-          fi
-
           for file in ${added_files[@]}; do
             if [[ $file == .changeset* ]]; then
               hasChangeset=1
