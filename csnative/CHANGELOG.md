@@ -1,5 +1,11 @@
 # csnative
 
+## 1.5.1
+
+### Patch Changes
+
+- 97a34e9: Update App.js
+
 ## 1.5.0
 
 ### Minor Changes
