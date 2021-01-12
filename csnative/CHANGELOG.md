@@ -1,5 +1,11 @@
 # csnative
 
+## 1.5.4
+
+### Patch Changes
+
+- 9892ec8: Update App.js
+
 ## 1.5.3
 
 ### Patch Changes
