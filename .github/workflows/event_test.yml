@@ -5,11 +5,11 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  create_tags:
+    if: "contains(github.event.head_commit.message, 'build: update version') && github.event.head_commit.author.name == 'github-actions[bot]'"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run conditional step
-        if: "contains(github.event.head_commit.message, 'build: update version') && github.event.head_commit.author.name == 'github-actions[bot]'"
+      - name: Run echo
         run: echo "THIS IS A VERSION COMMIT!!!"
 
