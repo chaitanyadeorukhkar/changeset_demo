@@ -61,5 +61,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run echo
-        run: echo "THIS IS A VERSION COMMIT!!!"
+      - name: Read changelog
+        id: changelog
+        uses: chaitanyadeorukhkar/changelog-reader-action@master
+      - name: Echo version
+        run: echo ${{ steps.changelog.outputs.version }}
