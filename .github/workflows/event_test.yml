@@ -9,5 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Run a multi-line script
-        run: echo ${{ github.event.head_commit.author.name }}
+      - name: Run conditional step
+        if: |
+            contains(github.event.head_commit.message, 'build: update version') &&
+            github.event.head_commit.author.name == "github-actions[bot]"
+        run: echo "THIS IS A VERSION COMMIT!!!"
+
