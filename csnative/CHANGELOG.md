@@ -1,5 +1,11 @@
 # csnative
 
+## 1.6.1
+
+### Patch Changes
+
+- 1d14152: Fix issues on home
+
 ## 1.6.0
 
 ### Minor Changes

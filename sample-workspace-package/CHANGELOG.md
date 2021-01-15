@@ -1,5 +1,11 @@
 # @sample/workspace-package
 
+## 1.1.0
+
+### Minor Changes
+
+- ba04099: Add some new tabs
+
 ## 1.0.4
 
 ### Patch Changes
