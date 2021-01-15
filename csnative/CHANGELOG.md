@@ -1,5 +1,11 @@
 # csnative
 
+## 1.5.8
+
+### Patch Changes
+
+- 05ba188: Update App.js
+
 ## 1.5.7
 
 ### Patch Changes
