@@ -1,5 +1,15 @@
 # csnative
 
+## 1.6.0
+
+### Minor Changes
+
+- 67216b8: Redesign home layout
+
+### Patch Changes
+
+- 1b48fa9: Fix a typo in settings
+
 ## 1.5.10
 
 ### Patch Changes
