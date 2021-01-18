@@ -8,11 +8,17 @@ on:
 jobs:
   publish:
     name: Publish
+    runs-on: ubuntu-latest
     if: "contains(github.event.head_commit.message, 'build: update version') && github.event.head_commit.author.name == 'github-actions[bot]'"
+    steps:
+      - uses: actions/checkout@v2
+      - name: Publish CSNative
+        run: echo "Published successfully"
 
   create_release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
+    needs: [publish]
     steps:
       - uses: actions/checkout@v2
       - name: Get updated packages
@@ -20,9 +26,10 @@ jobs:
         uses: chaitanyadeorukhkar/gh-action-get-changed-files@master
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Echo update packages
-        run: echo ${{ steps.updated_packages.outputs.updated }}
-      - name: Echo update version
-        run: echo ${{ steps.updated_packages.outputs.updatedVersion }}
-      - name: Echo update changelog
-        run: echo ${{ steps.updated_packages.outputs.updatedChangelogEntry }}
+      - name: Create a Release
+        if: ${{ steps.updated_packages.outputs.updatedVersion!= null }}
+        uses: actions/create-release@v1
+        with:
+          tag_name: "csnative@${{ steps.updated_packages.outputs.updatedVersion }}"
+          release_name: "csnative@${{ steps.updated_packages.outputs.updatedVersion }}"
+          body: ${{ steps.updated_packages.outputs.updatedChangelogEntry }}
