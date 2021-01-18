@@ -1,5 +1,11 @@
 # csnative
 
+## 1.6.5
+
+### Patch Changes
+
+- db7acda: Update App.js
+
 ## 1.6.4
 
 ### Patch Changes
