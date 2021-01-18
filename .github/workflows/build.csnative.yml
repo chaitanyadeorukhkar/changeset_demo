@@ -1,0 +1,28 @@
+name: Build CSNative
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  publish:
+    name: Publish
+    if: "contains(github.event.head_commit.message, 'build: update version') && github.event.head_commit.author.name == 'github-actions[bot]'"
+
+  create_release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get updated packages
+        id: updated_packages
+        uses: chaitanyadeorukhkar/gh-action-get-changed-files@master
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Echo update packages
+        run: echo ${{ steps.updated_packages.outputs.updated }}
+      - name: Echo update version
+        run: echo ${{ steps.updated_packages.outputs.updatedVersion }}
+      - name: Echo update changelog
+        run: echo ${{ steps.updated_packages.outputs.updatedChangelogEntry }}
