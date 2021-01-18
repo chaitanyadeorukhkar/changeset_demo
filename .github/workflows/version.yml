@@ -66,6 +66,7 @@ jobs:
         id: updated_packages
         uses: chaitanyadeorukhkar/gh-action-get-changed-files@master
         with:
+          package_name: csnative 
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Echo update packages
         run: echo ${{ steps.updated_packages.outputs.updated }}
