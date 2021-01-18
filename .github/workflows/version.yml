@@ -69,3 +69,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Echo update packages
         run: echo ${{ steps.updated_packages.outputs.updated }}
+      - name: Echo update version
+        run: echo ${{ steps.updated_packages.outputs.updatedVersion }}
+      - name: Echo update changelog
+        run: echo ${{ steps.updated_packages.outputs.updatedChangelogEntry }}
