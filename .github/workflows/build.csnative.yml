@@ -30,6 +30,8 @@ jobs:
       - name: Create a Release
         if: ${{ steps.updated_packages.outputs.updatedVersion!= null }}
         uses: actions/create-release@v1
+          env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: "csnative@${{ steps.updated_packages.outputs.updatedVersion }}"
           release_name: "csnative@${{ steps.updated_packages.outputs.updatedVersion }}"
