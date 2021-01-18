@@ -70,6 +70,8 @@ jobs:
       - name: Echo update packages
         run: echo ${{ steps.updated_packages.outputs.updated }}
       - name: Echo update version
+        if: ${{ steps.updated_packages.outputs.updatedVersion!= null }}
         run: echo ${{ steps.updated_packages.outputs.updatedVersion }}
       - name: Echo update changelog
+        if: ${{ steps.updated_packages.outputs.updatedChangelogEntry!= null }}
         run: echo ${{ steps.updated_packages.outputs.updatedChangelogEntry }}
