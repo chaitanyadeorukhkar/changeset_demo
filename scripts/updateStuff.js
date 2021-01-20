@@ -141,21 +141,6 @@ async function processOutputs() {
     });
   });
 
-  console.log(
-    "Log ~ file: updateStuff.js ~ line 127 ~ processOutputs ~ updatedPackages",
-    updatedPackages
-  );
-
-  let updatedVersion = null;
-  let updatedChangelogEntry = null;
-  if (packageNameInput) {
-    const updatedPackage = updatedPackages.find(
-      (package) => package.name == packageNameInput
-    );
-    updatedVersion = updatedPackage.version;
-    updatedChangelogEntry = updatedPackage.changes;
-  }
-
   updatedPackages.map(({ name, version, changes }) => {
     gh.repos.createRelease({
       tag_name: `${name}@${version}`,
@@ -164,10 +149,6 @@ async function processOutputs() {
       ...context.repo,
     });
   });
-
-  core.setOutput("updated", toJSON(updatedPackages, 0));
-  core.setOutput("updatedVersion", updatedVersion);
-  core.setOutput("updatedChangelogEntry", updatedChangelogEntry);
 }
 
 async function processCommitData(result) {
