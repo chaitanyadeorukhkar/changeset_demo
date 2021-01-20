@@ -3,7 +3,7 @@ name: Build CSNative
 on:
   push:
     branches:
-      - master
+      - mastersdf
 
 jobs:
   publish:
