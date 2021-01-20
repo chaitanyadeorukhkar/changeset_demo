@@ -55,3 +55,5 @@ jobs:
           title: "build: update version"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Test node script
+        run: yarn update-stuff ${{ secrets.GITHUB_TOKEN }}
