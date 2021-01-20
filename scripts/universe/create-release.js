@@ -12,7 +12,6 @@ const repo = context.payload.repository;
 const owner = repo.owner;
 
 const FILES = new Set();
-console.log("TOKEN INPUT", core.getInput("token"));
 const gh = github.getOctokit(process.argv[2]);
 
 const args = { owner: owner.name || owner.login, repo: repo.name };
@@ -163,19 +162,23 @@ async function processCommitData(result) {
   });
 }
 
-getCommits().then((commits) => {
-  // Exclude merge commits
-  commits = commits.filter((c) => !c.parents || 1 === c.parents.length);
+function createRelease() {
+  getCommits().then((commits) => {
+    // Exclude merge commits
+    commits = commits.filter((c) => !c.parents || 1 === c.parents.length);
 
-  if ("push" === context.eventName) {
-    commits = commits.filter((c) => c.distinct);
-  }
+    if ("push" === context.eventName) {
+      commits = commits.filter((c) => c.distinct);
+    }
 
-  debug("All Commits", commits);
+    debug("All Commits", commits);
 
-  Promise.all(commits.map(fetchCommitData))
-    .then((data) => Promise.all(data.map(processCommitData)))
-    .then(processOutputs)
-    .then(() => (process.exitCode = 0))
-    .catch((err) => core.error(err) && (process.exitCode = 1));
-});
+    Promise.all(commits.map(fetchCommitData))
+      .then((data) => Promise.all(data.map(processCommitData)))
+      .then(processOutputs)
+      .then(() => (process.exitCode = 0))
+      .catch((err) => core.error(err) && (process.exitCode = 1));
+  });
+}
+
+module.exports = createRelease;
