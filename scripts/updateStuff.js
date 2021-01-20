@@ -12,8 +12,8 @@ const repo = context.payload.repository;
 const owner = repo.owner;
 
 const FILES = new Set();
-
-const gh = github.getOctokit(process.argv[3]);
+console.log("TOKEN INPUT", core.getInput("token"));
+const gh = github.getOctokit(process.argv[2]);
 
 const args = { owner: owner.name || owner.login, repo: repo.name };
 

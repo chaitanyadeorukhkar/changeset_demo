@@ -20,7 +20,7 @@
     "version-update:csnative": "lerna run --scope csnative version-update",
     "changeset-version": "changeset version",
     "version-update": "run-s changeset-version version-update:*",
-    "update-stuff": "node ./scripts/updateStuff.js --"
+    "update-stuff": "node ./scripts/updateStuff.js"
   },
   "devDependencies": {
     "lerna": "3.18.3",
