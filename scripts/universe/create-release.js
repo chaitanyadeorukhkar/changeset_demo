@@ -12,7 +12,7 @@ const repo = context.payload.repository;
 const owner = repo.owner;
 
 const FILES = new Set();
-const gh = github.getOctokit(process.argv[2]);
+const gh = github.getOctokit(process.env.GITHUB_TOKEN);
 
 const args = { owner: owner.name || owner.login, repo: repo.name };
 
