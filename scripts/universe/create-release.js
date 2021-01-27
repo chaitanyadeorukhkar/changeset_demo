@@ -93,6 +93,7 @@ function getChangelogEntry(changelog, version) {
           index: i,
           depth: node.depth,
         };
+        continue;
       }
       if (
         endIndex === undefined &&
