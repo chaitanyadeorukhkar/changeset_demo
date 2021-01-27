@@ -174,4 +174,4 @@ function createRelease() {
     .catch((err) => core.error(err) && (process.exitCode = 1));
 }
 
-createRelease();
+module.exports = createRelease;
