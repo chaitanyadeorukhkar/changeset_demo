@@ -1,5 +1,11 @@
 # csnative
 
+## 1.7.14
+
+### Patch Changes
+
+- c265e53: Update App.js
+
 ## 1.7.13
 
 ### Patch Changes
