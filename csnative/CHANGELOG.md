@@ -1,5 +1,11 @@
 # csnative
 
+## 1.7.15
+
+### Patch Changes
+
+- dde30dc: Update App.js
+
 ## 1.7.14
 
 ### Patch Changes
