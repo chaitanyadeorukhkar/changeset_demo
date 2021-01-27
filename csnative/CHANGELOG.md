@@ -1,5 +1,11 @@
 # csnative
 
+## 1.7.11
+
+### Patch Changes
+
+- bb40065: Make some changes
+
 ## 1.7.10
 
 ### Patch Changes
