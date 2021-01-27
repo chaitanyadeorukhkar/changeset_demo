@@ -1,5 +1,11 @@
 # csnative
 
+## 1.7.10
+
+### Patch Changes
+
+- 0b9a4b8: Some new changes
+
 ## 1.7.9
 
 ### Patch Changes
