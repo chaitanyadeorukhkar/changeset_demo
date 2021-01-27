@@ -1,6 +1,6 @@
 {
   "name": "csnative",
-  "version": "1.7.12",
+  "version": "1.7.13",
   "private": true,
   "scripts": {
     "android": "react-native run-android",
