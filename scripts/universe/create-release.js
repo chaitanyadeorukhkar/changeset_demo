@@ -10,32 +10,13 @@ const mdastToString = require("mdast-util-to-string");
 const context = github.context;
 const repo = context.payload.repository;
 const owner = repo.owner;
-
-const FILES = new Set();
 const gh = github.getOctokit(process.env.GITHUB_TOKEN);
-
 const args = { owner: owner.name || owner.login, repo: repo.name };
 
-function formatLogMessage(msg, obj = null) {
-  return obj ? `${msg}: ${toJSON(obj)}` : msg;
-}
-
-function debug(msg, obj = null) {
-  core.debug(formatLogMessage(msg, obj));
-}
-
-function info(msg, obj = null) {
-  core.info(formatLogMessage(msg, obj));
-}
-
-function toJSON(value, pretty = true) {
-  return pretty ? JSON.stringify(value, null, 4) : JSON.stringify(value);
-}
+const FILES = new Set();
 
 function fetchCommitData(commit) {
   args.ref = commit.id || commit.sha;
-
-  debug("Calling gh.repos.getCommit() with args", args);
 
   return gh.repos.getCommit(args);
 }
@@ -43,16 +24,11 @@ function fetchCommitData(commit) {
 function getCommits() {
   let commits;
 
-  debug("Getting commits...");
-
   switch (context.eventName) {
     case "push":
       commits = context.payload.commits;
       break;
     default:
-      info(
-        'You are using this action on an event for which it has not been tested. Only the "push" events are supported.'
-      );
       commits = [];
       break;
   }
@@ -93,6 +69,7 @@ function getChangelogEntry(changelog, version) {
           index: i,
           depth: node.depth,
         };
+        // eslint-disable-next-line no-continue
         continue;
       }
       if (
@@ -116,8 +93,7 @@ function getChangelogEntry(changelog, version) {
   };
 }
 
-function processOutputs() {
-  debug("FILES", Array.from(FILES.values()));
+function processReleases() {
   const allUpdatedPackageJsonPath = filterPackageJson(
     Array.from(FILES.values())
   );
@@ -150,8 +126,6 @@ function processOutputs() {
 }
 
 function processCommitData(result) {
-  debug("Processing API Response", result);
-
   if (!result || !result.data) {
     return;
   }
@@ -165,12 +139,12 @@ function createRelease() {
   let commits = getCommits();
   // Exclude merge commits
   commits = commits.filter((c) => !c.parents || c.parents.length === 1);
-
+  // Remove duplicates if any
   commits = commits.filter((c) => c.distinct);
 
   Promise.all(commits.map(fetchCommitData))
     .then((data) => data.map(processCommitData))
-    .then(processOutputs)
+    .then(processReleases)
     .then(() => (process.exitCode = 0))
     .catch((err) => core.error(err) && (process.exitCode = 1));
 }
