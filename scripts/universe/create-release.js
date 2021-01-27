@@ -161,22 +161,17 @@ function processCommitData(result) {
 }
 
 function createRelease() {
-  getCommits().then((commits) => {
-    // Exclude merge commits
-    commits = commits.filter((c) => !c.parents || c.parents.length === 1);
+  let commits = getCommits();
+  // Exclude merge commits
+  commits = commits.filter((c) => !c.parents || c.parents.length === 1);
 
-    if (context.eventName === "push") {
-      commits = commits.filter((c) => c.distinct);
-    }
+  commits = commits.filter((c) => c.distinct);
 
-    debug("All Commits", commits);
-
-    Promise.all(commits.map(fetchCommitData))
-      .then((data) => Promise.all(data.map(processCommitData)))
-      .then(processOutputs)
-      .then(() => (process.exitCode = 0))
-      .catch((err) => core.error(err) && (process.exitCode = 1));
-  });
+  Promise.all(commits.map(fetchCommitData))
+    .then((data) => data.map(processCommitData))
+    .then(processOutputs)
+    .then(() => (process.exitCode = 0))
+    .catch((err) => core.error(err) && (process.exitCode = 1));
 }
 
-module.exports = createRelease;
+createRelease();
