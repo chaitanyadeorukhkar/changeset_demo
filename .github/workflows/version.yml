@@ -58,3 +58,30 @@ jobs:
       - name: Create Releases
         if: "contains(github.event.head_commit.message, 'build: update version') && github.event.head_commit.author.name == 'github-actions[bot]'"
         run: GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} yarn create-release
+  create-releases:
+    name: Create Releases
+    runs-on: ubuntu-latest
+    if: "contains(github.event.head_commit.message, 'build: update version') && github.event.head_commit.author.name == 'github-actions[bot]'"
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+        with:
+          fetch-depth: 0
+      - name: Setup Node.js 12.x
+        uses: actions/setup-node@master
+        with:
+          node-version: 12.x
+      - name: Set yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+      - name: Create Releases
+        run: GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} yarn create-release
