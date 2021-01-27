@@ -40,7 +40,7 @@ function fetchCommitData(commit) {
   return gh.repos.getCommit(args);
 }
 
-async function getCommits() {
+function getCommits() {
   let commits;
 
   debug("Getting commits...");
@@ -65,7 +65,7 @@ function filterPackageJson(files) {
 }
 
 function getChangelogEntry(changelog, version) {
-  let ast = unified()
+  const ast = unified()
     .use(remarkParse)
     .parse(changelog);
   const BumpLevels = {
@@ -76,17 +76,16 @@ function getChangelogEntry(changelog, version) {
   };
   let highestLevel = BumpLevels.dep;
 
-  let nodes = ast.children;
-  let headingStartInfo;
-  let endIndex;
+  const nodes = ast.children;
+  let headingStartInfo, endIndex;
 
   for (let i = 0; i < nodes.length; i++) {
-    let node = nodes[i];
+    const node = nodes[i];
     if (node.type === "heading") {
-      let stringified = mdastToString(node);
-      let match = stringified.toLowerCase().match(/(major|minor|patch)/);
+      const stringified = mdastToString(node);
+      const match = stringified.toLowerCase().match(/(major|minor|patch)/);
       if (match !== null) {
-        let level = BumpLevels[match[0]];
+        const level = BumpLevels[match[0]];
         highestLevel = Math.max(level, highestLevel);
       }
       if (headingStartInfo === undefined && stringified === version) {
@@ -94,7 +93,6 @@ function getChangelogEntry(changelog, version) {
           index: i,
           depth: node.depth,
         };
-        continue;
       }
       if (
         endIndex === undefined &&
@@ -113,17 +111,17 @@ function getChangelogEntry(changelog, version) {
     content: unified()
       .use(remarkStringify)
       .stringify(ast),
-    highestLevel: highestLevel,
+    highestLevel,
   };
 }
 
-async function processOutputs() {
+function processOutputs() {
   debug("FILES", Array.from(FILES.values()));
   const allUpdatedPackageJsonPath = filterPackageJson(
     Array.from(FILES.values())
   );
-  let updatedPackages = [];
-  allUpdatedPackageJsonPath.map((packageJsonPath) => {
+  const updatedPackages = [];
+  allUpdatedPackageJsonPath.forEach((packageJsonPath) => {
     const packageDirectory = path.dirname(`./${packageJsonPath}`);
     const packageJson = JSON.parse(
       fs.readFileSync(`${packageDirectory}/package.json`, "utf-8")
@@ -140,7 +138,7 @@ async function processOutputs() {
     });
   });
 
-  updatedPackages.map(({ name, version, changes }) => {
+  updatedPackages.forEach(({ name, version, changes }) => {
     gh.repos.createRelease({
       tag_name: `${name}@${version}`,
       name: `${name}@${version}`,
@@ -150,7 +148,7 @@ async function processOutputs() {
   });
 }
 
-async function processCommitData(result) {
+function processCommitData(result) {
   debug("Processing API Response", result);
 
   if (!result || !result.data) {
@@ -165,9 +163,9 @@ async function processCommitData(result) {
 function createRelease() {
   getCommits().then((commits) => {
     // Exclude merge commits
-    commits = commits.filter((c) => !c.parents || 1 === c.parents.length);
+    commits = commits.filter((c) => !c.parents || c.parents.length === 1);
 
-    if ("push" === context.eventName) {
+    if (context.eventName === "push") {
       commits = commits.filter((c) => c.distinct);
     }
 
