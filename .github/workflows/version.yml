@@ -61,6 +61,8 @@ jobs:
   create-releases:
     name: Create Releases
     runs-on: ubuntu-latest
+    env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     if: "contains(github.event.head_commit.message, 'build: update version') && github.event.head_commit.author.name == 'github-actions[bot]'"
     steps:
       - name: Checkout Repo
@@ -84,4 +86,4 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
       - name: Create Releases
-        run: GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }} yarn create-release
+        run: yarn create-release
