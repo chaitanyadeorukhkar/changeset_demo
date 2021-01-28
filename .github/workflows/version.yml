@@ -53,6 +53,8 @@ jobs:
           version: yarn version-update
           commit: "build: update version"
           title: "build: update version"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   create-releases:
     name: Create Releases
     runs-on: ubuntu-latest
