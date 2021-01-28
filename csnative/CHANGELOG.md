@@ -1,5 +1,12 @@
 # csnative
 
+## 1.7.16
+
+### Patch Changes
+
+- f643c56: another update
+- 431179d: Update App.js
+
 ## 1.7.15
 
 ### Patch Changes
