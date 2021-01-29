@@ -125,7 +125,7 @@ function processReleases() {
       });
     });
   } catch (error) {
-    core.error(error);
+    core.setFailed(error);
   }
 }
 
