@@ -41,6 +41,8 @@ jobs:
           ruby-version: 2.7
       - name: Setup Fastlane
         run: bundle install
+      - name: Test universe
+        run: npx universe test
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Create Version Update Pull Request
