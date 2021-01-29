@@ -140,7 +140,7 @@ function createRelease() {
   // Exclude merge commits
   commits = commits.filter((c) => !c.parents || c.parents.length === 1);
   // Remove duplicates if any
-  commits = commits.filter((c) => c.distinct);
+  //   commits = commits.filter((c) => c.distinct);
 
   Promise.all(commits.map(fetchCommitData))
     .then((data) => data.map(processCommitData))
