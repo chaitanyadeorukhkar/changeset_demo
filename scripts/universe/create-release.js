@@ -146,7 +146,7 @@ function createRelease() {
     .then((data) => data.map(processCommitData))
     .then(processReleases)
     .then(() => (process.exitCode = 0))
-    .catch((err) => core.error(err) && (process.exitCode = 1));
+    .catch((err) => core.setFailed(err) && (process.exitCode = 1));
 }
 
 module.exports = createRelease;
