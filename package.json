@@ -20,7 +20,7 @@
     "version-update:csnative": "lerna run --scope csnative version-update",
     "changeset-version": "changeset version",
     "version-update": "run-s changeset-version version-update:*",
-    "create-release": "node ./scripts/create-release.js"
+    "release": "node ./scripts/create-release.js"
   },
   "devDependencies": {
     "lerna": "3.18.3",
