@@ -94,35 +94,39 @@ function getChangelogEntry(changelog, version) {
 }
 
 function processReleases() {
-  const allUpdatedPackageJsonPath = filterPackageJson(
-    Array.from(FILES.values())
-  );
-  const updatedPackages = [];
-  allUpdatedPackageJsonPath.forEach((packageJsonPath) => {
-    const packageDirectory = path.dirname(`./${packageJsonPath}`);
-    const packageJson = JSON.parse(
-      fs.readFileSync(`${packageDirectory}/package.json`, "utf-8")
+  try {
+    const allUpdatedPackageJsonPath = filterPackageJson(
+      Array.from(FILES.values())
     );
-    const changelog = fs.readFileSync(
-      `${packageDirectory}/CHANGELOG.md`,
-      "utf-8"
-    );
-    const changelogEntry = getChangelogEntry(changelog, packageJson.version);
-    updatedPackages.push({
-      name: packageJson.name,
-      version: packageJson.version,
-      changes: changelogEntry.content,
+    const updatedPackages = [];
+    allUpdatedPackageJsonPath.forEach((packageJsonPath) => {
+      const packageDirectory = path.dirname(`./${packageJsonPath}`);
+      const packageJson = JSON.parse(
+        fs.readFileSync(`${packageDirectory}/package.json`, "utf-8")
+      );
+      const changelog = fs.readFileSync(
+        `${packageDirectory}/CHANGdELOG.md`,
+        "utf-8"
+      );
+      const changelogEntry = getChangelogEntry(changelog, packageJson.version);
+      updatedPackages.push({
+        name: packageJson.name,
+        version: packageJson.version,
+        changes: changelogEntry.content,
+      });
     });
-  });
 
-  updatedPackages.forEach(({ name, version, changes }) => {
-    gh.repos.createRelease({
-      tag_name: `${name}@${version}`,
-      name: `${name}@${version}`,
-      body: changes,
-      ...context.repo,
+    updatedPackages.forEach(({ name, version, changes }) => {
+      gh.repos.createRelease({
+        tag_name: `${name}@${version}`,
+        name: `${name}@${version}`,
+        body: changes,
+        ...context.repo,
+      });
     });
-  });
+  } catch (error) {
+    core.error(error);
+  }
 }
 
 function processCommitData(result) {
