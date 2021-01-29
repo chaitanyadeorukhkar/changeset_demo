@@ -1,5 +1,11 @@
 # csnative
 
+## 1.7.21
+
+### Patch Changes
+
+- 9875317: Update App.js
+
 ## 1.7.20
 
 ### Patch Changes
