@@ -96,12 +96,11 @@ function getChangelogContent(changelog, version) {
   if (headingStartInfo) {
     ast.children = ast.children.slice(headingStartInfo.index + 1, endIndex);
   }
-  return {
-    content: unified()
-      .use(remarkStringify)
-      .stringify(ast),
-    highestLevel,
-  };
+  const content = unified()
+    .use(remarkStringify)
+    .stringify(ast);
+
+  return content;
 }
 
 function createReleases() {
@@ -123,7 +122,7 @@ function createReleases() {
     updatedPackages.push({
       name: packageJson.name,
       version: packageJson.version,
-      changes: changelogContent.content,
+      changes: changelogContent,
     });
   });
 
