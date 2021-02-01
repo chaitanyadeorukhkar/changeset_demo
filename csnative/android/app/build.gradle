@@ -132,8 +132,8 @@ android {
         applicationId "com.csnative"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 51
-        versionName "1.7.24"
+        versionCode 52
+        versionName "1.8.0"
     }
     splits {
         abi {

@@ -1,5 +1,11 @@
 # csnative
 
+## 1.8.0
+
+### Minor Changes
+
+- b96a076: Update App.js
+
 ## 1.7.24
 
 ### Patch Changes
