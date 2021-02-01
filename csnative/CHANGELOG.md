@@ -1,5 +1,11 @@
 # csnative
 
+## 1.7.24
+
+### Patch Changes
+
+- 50423c4: Update App.js
+
 ## 1.7.23
 
 ### Patch Changes
