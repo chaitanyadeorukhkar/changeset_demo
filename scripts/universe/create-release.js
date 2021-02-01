@@ -1,25 +1,19 @@
 const fs = require("fs");
 const path = require("path");
-const github = require("@actions/github");
-const core = require("@actions/core");
+const gitHubActions = require("@actions/github");
+const gitHubActionsCore = require("@actions/core");
 const unified = require("unified");
 const remarkParse = require("remark-parse");
 const remarkStringify = require("remark-stringify");
 const mdastToString = require("mdast-util-to-string");
 
-const context = github.context;
+const context = gitHubActions.context;
 const repo = context.payload.repository;
 const owner = repo.owner;
-const gh = github.getOctokit(process.env.GITHUB_TOKEN);
+const gitHubOctokit = gitHubActions.getOctokit(process.env.GITHUB_TOKEN);
 const args = { owner: owner.name || owner.login, repo: repo.name };
 
 const FILES = new Set();
-
-function fetchCommitData(commit) {
-  args.ref = commit.id || commit.sha;
-
-  return gh.repos.getCommit(args);
-}
 
 function getCommits() {
   let commits;
@@ -36,11 +30,28 @@ function getCommits() {
   return commits;
 }
 
-function filterPackageJson(files) {
-  return files.filter((f) => f.match(/package.json$/));
+function fetchCommitData(commit) {
+  args.ref = commit.id || commit.sha;
+
+  return gitHubOctokit.repos.getCommit(args);
 }
 
-function getChangelogEntry(changelog, version) {
+function processCommitData(result) {
+  if (!result || !result.data) {
+    return;
+  }
+
+  result.data.files.forEach((file) => {
+    FILES.add(file.filename);
+  });
+}
+
+function filterPackageJson(files) {
+  return files.filter((file) => file.match(/package.json$/));
+}
+
+function getChangelogContent(changelog, version) {
+  // Parse changelog created by changeset. Reference for this function: https://gitHubActions.com/changesets/action/blob/master/src/utils.ts#L38
   const ast = unified()
     .use(remarkParse)
     .parse(changelog);
@@ -55,8 +66,8 @@ function getChangelogEntry(changelog, version) {
   const nodes = ast.children;
   let headingStartInfo, endIndex;
 
-  for (let i = 0; i < nodes.length; i++) {
-    const node = nodes[i];
+  for (let nodeIndex = 0; nodeIndex < nodes.length; nodeIndex++) {
+    const node = nodes[nodeIndex];
     if (node.type === "heading") {
       const stringified = mdastToString(node);
       const match = stringified.toLowerCase().match(/(major|minor|patch)/);
@@ -66,7 +77,7 @@ function getChangelogEntry(changelog, version) {
       }
       if (headingStartInfo === undefined && stringified === version) {
         headingStartInfo = {
-          index: i,
+          index: nodeIndex,
           depth: node.depth,
         };
         // eslint-disable-next-line no-continue
@@ -77,7 +88,7 @@ function getChangelogEntry(changelog, version) {
         headingStartInfo !== undefined &&
         headingStartInfo.depth === node.depth
       ) {
-        endIndex = i;
+        endIndex = nodeIndex;
         break;
       }
     }
@@ -93,30 +104,31 @@ function getChangelogEntry(changelog, version) {
   };
 }
 
-function processReleases() {
-  const allUpdatedPackageJsonPath = filterPackageJson(
-    Array.from(FILES.values())
-  );
+function createReleases() {
+  const updatedPackageJsonPaths = filterPackageJson(Array.from(FILES.values()));
   const updatedPackages = [];
-  allUpdatedPackageJsonPath.forEach((packageJsonPath) => {
+  updatedPackageJsonPaths.forEach((packageJsonPath) => {
     const packageDirectory = path.dirname(`./${packageJsonPath}`);
     const packageJson = JSON.parse(
       fs.readFileSync(`${packageDirectory}/package.json`, "utf-8")
     );
     const changelog = fs.readFileSync(
-      `${packageDirectory}/CHANGdELOG.md`,
+      `${packageDirectory}/CHANGELOG.md`,
       "utf-8"
     );
-    const changelogEntry = getChangelogEntry(changelog, packageJson.version);
+    const changelogContent = getChangelogContent(
+      changelog,
+      packageJson.version
+    );
     updatedPackages.push({
       name: packageJson.name,
       version: packageJson.version,
-      changes: changelogEntry.content,
+      changes: changelogContent.content,
     });
   });
 
   updatedPackages.forEach(({ name, version, changes }) => {
-    gh.repos.createRelease({
+    gitHubOctokit.repos.createRelease({
       tag_name: `${name}@${version}`,
       name: `${name}@${version}`,
       body: changes,
@@ -125,28 +137,16 @@ function processReleases() {
   });
 }
 
-function processCommitData(result) {
-  if (!result || !result.data) {
-    return;
-  }
-
-  result.data.files.forEach((file) => {
-    FILES.add(file.filename);
-  });
-}
-
-function createRelease() {
+function release() {
   let commits = getCommits();
   // Exclude merge commits
   commits = commits.filter((c) => !c.parents || c.parents.length === 1);
-  // Remove duplicates if any
-  //   commits = commits.filter((c) => c.distinct);
 
-  Promise.all(commits.map(fetchCommitData))
+  return Promise.all(commits.map(fetchCommitData))
     .then((data) => data.map(processCommitData))
-    .then(processReleases)
+    .then(createReleases)
     .then(() => (process.exitCode = 0))
-    .catch((err) => core.setFailed(err) && (process.exitCode = 1));
+    .catch((err) => gitHubActionsCore.setFailed(err) && (process.exitCode = 1));
 }
 
-module.exports = createRelease;
+module.exports = release;
