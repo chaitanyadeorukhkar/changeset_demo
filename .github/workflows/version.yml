@@ -4,7 +4,7 @@ name: Version
     branches:
       - master
 env:
-  GITHUB_ACCESS_TOKEN: "${{ secrets.CI_BOT_TOKEN }}"
+  GITHUB_ACCESS_TOKEN: ${{ secrets.CI_BOT_TOKEN }}
 jobs:
   version:
     name: Version Update
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Codebase
         uses: actions/checkout@v2
         with:
-          token: "${{ secrets.CI_BOT_TOKEN }}"
+          token: ${{ secrets.CI_BOT_TOKEN }}
       - name: Setup Node v14
         uses: actions/setup-node@v2
         with:
