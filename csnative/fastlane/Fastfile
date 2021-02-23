@@ -80,5 +80,6 @@ platform :android do
     yarn(
       command: "global add appcenter-cli",
     )
+    sh("appcenter help")
   end
 end
