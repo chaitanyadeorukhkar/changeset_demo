@@ -72,4 +72,10 @@ platform :android do
              "android.injected.signing.key.password" => "android",
            }, print_command: false)
   end
+
+  lane :codepush do
+    yarn(
+      command: "install",
+    )
+  end
 end

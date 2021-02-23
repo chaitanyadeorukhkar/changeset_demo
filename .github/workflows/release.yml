@@ -1,0 +1,41 @@
+name: XMobile - Release
+env:
+  GITHUB_ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+on:
+  - pull_request
+jobs:
+  release-codepush:
+    name: Release Android
+    if: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Codebase
+        uses: actions/checkout@v2
+      - name: Use Node v14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Set yarn cache directory path
+        id: yarn-cache-dir-path
+        run: 'echo "::set-output name=dir::$(yarn cache dir)"'
+      - name: Cache NPM dependencies
+        uses: actions/cache@v1
+        with:
+          path: "${{ steps.yarn-cache-dir-path.outputs.dir }}"
+          key: "${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}"
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: Cache Ruby dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.bundle
+          key: "${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}"
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1.58.1
+        with:
+          ruby-version: 2.7
+      - name: Install Ruby dependencies
+        run: bundle install
+      - name: Release
+        working-directory: csnative
+        run: bundle exec fastlane android codepush
