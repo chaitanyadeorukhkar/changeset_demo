@@ -78,6 +78,8 @@ platform :android do
       command: "install",
     )
     sh("npm install -g appcenter-cli")
+    sh("npm install -g @sentry/cli@1.55.1")
     sh("appcenter help")
+    sh("sentry-cli --help")
   end
 end
