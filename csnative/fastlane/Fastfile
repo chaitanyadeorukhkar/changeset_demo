@@ -72,4 +72,14 @@ platform :android do
              "android.injected.signing.key.password" => "android",
            }, print_command: false)
   end
+
+  lane :codepush do
+    yarn(
+      command: "install",
+    )
+    sh("npm install -g appcenter-cli")
+    sh("npm install -g @sentry/cli@1.55.1")
+    sh("appcenter help")
+    sh("sentry-cli --help")
+  end
 end
