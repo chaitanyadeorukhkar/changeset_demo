@@ -77,9 +77,7 @@ platform :android do
     yarn(
       command: "install",
     )
-    yarn(
-      command: "global add appcenter-cli",
-    )
+    sh("npm -g appcenter-cli")
     sh("appcenter help")
   end
 end
