@@ -78,7 +78,7 @@ platform :android do
       command: "install",
     )
     yarn(
-      command: "install -g appcenter-cli",
+      command: "global add appcenter-cli",
     )
   end
 end
