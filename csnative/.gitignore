@@ -57,3 +57,4 @@ fastlane/screenshots
 
 # CocoaPods
 /ios/Pods/
+/ios/sdf.something
